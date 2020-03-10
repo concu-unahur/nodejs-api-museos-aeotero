@@ -6,14 +6,22 @@ function imprimirMuseos(error, respuesta) {
   if (error) {
     throw new Error('algo se rompió', error);
   }
-
+  var dato = ("")
   const cantidad = respuesta.body.count;
   const museos = respuesta.body.results;
-  const prueba = nombreDireccion(respuesta.body.results[0]);
-  console.log(prueba); // prueba de la linea de texto 
+  // console.log(`Se encontraron ${cantidad} museos.`);
+  // console.log(`El primer museo se llama ${museos[0].nombre}.`)
+  
+  for (i in range (0, cantidad)) {
+      dato = dato + nombreDireccion(museos[i]) + "\n" // VER ACA EL TEMA DEL FOR LOOP Y YA ESTARIA
+  }
 
-  console.log(`Se encontraron ${cantidad} museos.`);
-  console.log(`El primer museo se llama ${museos[0].nombre}.`)
+  fs.writeFile("museos.txt", dato , terminar(error));
+
+  // const prueba = nombreDireccion(respuesta.body.results[0]);
+  // console.log(prueba); // prueba de la linea de texto 
+
+
 }
 
 
@@ -28,7 +36,7 @@ const fs = require ('fs');
 
 function despuesDeEscribir(error) {
   if (error) {
-    throw new Error("no se pudo escribir") ;
+    throw new Error("no se pudo escribir", error) ;
   }
   console.log("anda a leer tu archivo")
 }
@@ -38,15 +46,17 @@ const cancion = `hola\nchau`
 fs.writeFile("saludos.txt", cancion , despuesDeEscribir);
 // EJEMPLO PARA ESCRIBIR 
 
-function nombreDireccion(error,museo) { // museo = respuesta.body.results[i]
-  if (error) {
-    throw new Error("error al escribir linea de museo") ;
-  }
+function nombreDireccion(museo) { // museo = respuesta.body.results[i]
   const nombre = museo.nombre;
   const direccion = museo.direccion;
   const telefono = museo.telefono;
 
-  const frase = `${nombre} (${direccion}). Por cualquier consulta comunicarse al ${telefono} .` ;
+  return `${nombre} (${direccion}). Por cualquier consulta comunicarse al ${telefono} .` ;
+}
 
-  return frase
+function terminar(error) {
+  if (error) {
+    throw new Error("no se pudo escribir", error) ;
+  }
+  console.log("ya se escribio el archivo")
 }
