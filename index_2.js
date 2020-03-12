@@ -18,7 +18,7 @@ function imprimirMuseos(error, respuesta) {
     u => dato = dato + nombreDireccion(u) + "\n"
   ) 
 
-  fs.writeFile("conjunto1.txt", dato , segundaParte());
+  fs.writeFile("conjunto1.txt", dato , segundaParte);
   
 }
 
