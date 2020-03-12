@@ -13,12 +13,13 @@ function imprimirMuseos(error, respuesta) {
   }
   var dato = ("")
   const museos = respuesta.body.results;
+  const archivo = "museos.txt"
   
   museos.forEach(
     u => dato = dato + nombreDireccion(u) + "\n"
   ) 
 
-  fs.writeFile("museos.txt", dato , terminar(error, "museos.txt"));
+  fs.writeFile(archivo, dato , terminar(error, archivo));
 
 }
 
@@ -57,17 +58,19 @@ superagent
   .query({ format: 'json' })
   .end(imprimirOrganismos)
 
+
 function imprimirOrganismos(error, respuesta) {
   if (error) {
     throw new Error('no se pudo extraer informacion de organismos', error);
   }
   var dato = ("")
   const organismos = respuesta.body.results;
+  const archivo = "organismos.txt"
   
   organismos.forEach(
     u => dato = dato +"organismo: " + nombreDireccion(u) + "\n"
   ) 
 
-  fs.writeFile("organismos.txt", dato , terminar(error, "organismos.txt"));
+  fs.writeFile(archivo, dato , terminar(error, archivo));
 
 }
